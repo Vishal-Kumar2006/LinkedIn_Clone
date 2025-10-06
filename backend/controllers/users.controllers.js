@@ -67,3 +67,32 @@ export const login = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+// To Upload the profile picture
+export const uploadProfilePicture = async (req, res) => {
+  const { token } = req.body;
+
+  try {
+    if (!req.file) return res.status(400).json({ message: "No file uploaded" });
+
+    const user = await User.findOne({ token });
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    user.profilePicture = req.file.filename;
+    await user.save();
+
+    return res
+      .status(201)
+      .json({ message: "Profile picture updated successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+// To Updadte the profile picture of user
+export const updateUserProfile = async (req, res) => {
+  try {
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};

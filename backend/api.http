@@ -17,3 +17,12 @@ Content-Type: application/json
     "password":"vishal",
     "email":"vishal@gmail.com"
 }
+
+
+### Upload Profile Picture
+POST http://localhost:9090/update_profile_picture
+Content-Type: application/form-data
+
+# Form fields
+token: 96c6055dca2a68bfa7bc2694524e7fb0b0ad09955ccc82053ef4ca5fd579f772
+profile_picture: @C:\C:\Users\HP\OneDrive\Pictures\Camera Roll\vishal.jpg
