@@ -9,7 +9,7 @@ const connectionSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  statusAccepte: {
+  statusAccepted: {
     type: Boolean,
     default: null,
   },

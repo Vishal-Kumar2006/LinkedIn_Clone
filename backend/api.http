@@ -2,14 +2,25 @@ POST http://localhost:9090/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "username":"_vishaloo",
+    "userName":"_vishaloo",
     "password":"vishal",
     "email":"vishal@gmail.com",
     "name":"Vishal"
 }
 
-###
+### To create (register) another User  
+POST http://localhost:9090/register HTTP/1.1
+Content-Type: application/json
 
+{
+  "userName": "_nainy",
+  "password": "nainy",
+  "email": "nainy@gmail.com",
+  "name": "Nainy"
+}
+
+
+### To Login User 
 POST http://localhost:9090/login HTTP/1.1
 Content-Type: application/json
 
@@ -19,10 +30,56 @@ Content-Type: application/json
 }
 
 
-### Upload Profile Picture
-POST http://localhost:9090/update_profile_picture
-Content-Type: application/form-data
+### To Logun another User
+POST http://localhost:9090/login HTTP/1.1
+Content-Type: application/json
 
-# Form fields
-token: 96c6055dca2a68bfa7bc2694524e7fb0b0ad09955ccc82053ef4ca5fd579f772
-profile_picture: @C:\C:\Users\HP\OneDrive\Pictures\Camera Roll\vishal.jpg
+{
+    "password":"nainy",
+    "email":"nainy@gmail.com"
+}
+
+
+### Upload Profile Picture
+# POST http://localhost:9090/update_profile_picture
+# Content-Type: application/form-data
+# # Form fields
+# token: "96c6055dca2a68bfa7bc2694524e7fb0b0ad09955ccc82053ef4ca5fd579f772"
+# profile_picture: @C:\C:\Users\HP\OneDrive\Pictures\Camera Roll\vishal.jpg
+
+
+### Get User Profile 
+GET http://localhost:9090/get_user_and_profile HTTP/1.1
+Content-Type: application/json
+
+{
+    "token": "72623ed5a7029dd154f310477b5565cbb5b3f955253fb7f678b28791dde5f951"
+}
+
+
+### To Update Profile Data 
+POST http://localhost:9090/update_profile_data HTTP/1.1
+Content-Type: application/json
+
+{
+    "token": "72623ed5a7029dd154f310477b5565cbb5b3f955253fb7f678b28791dde5f951",
+    "bio": "I'm a Software Engineer at Amazon and working on upgrading myself.",
+    "currentPost": "Software Engineer II at Amazon",
+    "pastWork": [
+        {
+            "company": "Microsoft",
+            "position": "Software Engineer",
+            "years": 2
+        }
+    ],
+    "education": [
+        {
+            "school": "IIT Delhi",
+            "degree": "B.Tech",
+            "fieldOfStudy": "Computer Science"
+        }
+    ]
+}
+
+### To get all Users Profile 
+GET http://localhost:9090/get_all_users HTTP/1.1

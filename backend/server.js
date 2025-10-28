@@ -6,18 +6,18 @@ import mongoose from "mongoose";
 import postsRoutes from "../backend/routes/posts.routes.js";
 import usersRoutes from "../backend/routes/users.routes.js";
 
-dotenv.config();
-
+dotenv.config({ path: "../.env" });
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
+app.use(express.static("uploads"));
+
+const MONGO_URL = process.env.URL;
 const start = async () => {
   try {
-    await mongoose.connect(
-      "mongodb+srv://LinkedIN_Clone:password438455@cluster0.jhjft6g.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-    );
+    await mongoose.connect(MONGO_URL);
     console.log("✅ MongoDB is Connected Successfully");
 
     app.listen(9090, () => {

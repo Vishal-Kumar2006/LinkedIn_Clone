@@ -6,6 +6,14 @@ import {
   login,
   uploadProfilePicture,
   updateUserProfile,
+  getUserProfile,
+  updateProfileData,
+  getAllUserProfile,
+  downloadProfile,
+  sendConnectionRequest,
+  getMyConnectionRequests,
+  whatAreMyConnections,
+  acceptConnectonRequest,
 } from "../controllers/users.controllers.js";
 
 const router = Router();
@@ -30,5 +38,13 @@ router.route("/").get(userActiveCheck);
 router.route("/register").post(register);
 router.route("/login").post(login);
 router.route("/user_update").post(updateUserProfile);
+router.route("/get_user_and_profile").get(getUserProfile);
+router.route("/update_profile_data").post(updateProfileData);
+router.route("/get_all_users").get(getAllUserProfile);
+router.route("/download_resume").get(downloadProfile);
+router.route("/connection_request").post(sendConnectionRequest);
+router.route("/get_connection_requests").get(getMyConnectionRequests);
+router.route("/user_connection_request").get(whatAreMyConnections);
+router.route("/accept_connection_request").post(acceptConnectonRequest);
 
 export default router;
