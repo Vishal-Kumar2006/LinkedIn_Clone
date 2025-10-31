@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { ref } from "pdfkit";
 
 const commentSchema = new mongoose.Schema({
   userId: {
@@ -14,8 +13,14 @@ const commentSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
-  likes: {},
-  replies: {},
+  likes: {
+    type: Number,
+    default: 0,
+  },
+  replies: {
+    type: Array,
+    default: [],
+  },
 });
 
 const Comment = mongoose.model("Comment", commentSchema);

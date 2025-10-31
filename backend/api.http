@@ -39,7 +39,6 @@ Content-Type: application/json
     "email":"nainy@gmail.com"
 }
 
-
 ### Upload Profile Picture
 # POST http://localhost:9090/update_profile_picture
 # Content-Type: application/form-data
@@ -83,3 +82,59 @@ Content-Type: application/json
 
 ### To get all Users Profile 
 GET http://localhost:9090/get_all_users HTTP/1.1
+
+### To Create a Post
+POST http://localhost:9090/post HTTP/1.1
+Content-Type: application/json
+
+{
+  "token": "3321920b029e792ad0e6dbf4134266a719d609823182f0c49020f26ad4e83520",
+  "body": "Thrilled to share that I'm sharing my new second Post",
+  "media": "",
+  "active": true,
+  "fileType": ""
+}
+
+
+### To get all Posts
+GET http://localhost:9090/posts HTTP/1.1
+
+### To Comment on a Post
+POST http://localhost:9090/comment_post HTTP/1.1
+Content-Type: application/json
+
+{
+    "token":"f89a38391d873f3d0407443ccf08f4e91d609221c9f472b2c206c12a7bb4737d",
+    "postId": "6904a6f0242bdaad6d892331", 
+    "commentBody":"This is a Good Post Nainy"
+}
+
+
+### To get all Comment of a specific  Post
+GET  http://localhost:9090/get_comment_by_post HTTP/1.1
+Content-Type: application/json
+
+{
+    "postId": "6904a6f0242bdaad6d892331"
+}
+
+### TO (increase likes) like a post
+POST  http://localhost:9090/update_like HTTP/1.1
+Content-Type: application/json
+
+{
+    "token":"08cdec7579d41bf9483980bbb038d2739278c538512567136f49413ca1d766bb",
+    "postId": "6904a75dfa8be3086bccc579",
+    "type":"increment"
+}
+
+
+### To (decrease liked) dis-like of a post 
+POST  http://localhost:9090/update_like HTTP/1.1
+Content-Type: application/json
+
+{
+    "token":"08cdec7579d41bf9483980bbb038d2739278c538512567136f49413ca1d766bb",
+    "postId": "6904a75dfa8be3086bccc579",
+    "type":""
+}
