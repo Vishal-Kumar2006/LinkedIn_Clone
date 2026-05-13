@@ -5,6 +5,7 @@ import crypto from "crypto";
 import PDFDocument from "pdfkit";
 import fs from "fs";
 import Connection from "../models/connections.models.js";
+import path from "path";
 
 // A Function to convert User Data into PDF Page
 const convertUserDataToPDF = async (userData) => {
@@ -58,8 +59,8 @@ const convertUserDataToPDF = async (userData) => {
   });
 };
 
-//  TO Check if the user Routes are active
-export const userActiveCheck = async (re, res) => {
+//  To Check if the user Routes are active
+export const userActiveCheck = async (req, res) => {
   return res.status(200).json({ message: "User Route's Working Perfectly" });
 };
 
@@ -111,18 +112,19 @@ export const login = async (req, res) => {
     if (!user) return res.status(400).json({ message: "User not found" });
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch)
+    if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
+    }
 
     const token = crypto.randomBytes(32).toString("hex");
 
     const updatedUser = await User.findOneAndUpdate(
       { email },
       { token },
-      { new: true } // returns the updated document
+      { new: true }, // returns the updated document
     );
 
-    return res.status(200).json({ token });
+    return res.status(200).json({ token: token });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -151,7 +153,6 @@ export const uploadProfilePicture = async (req, res) => {
 
 // To Updadte the profile picture of user
 export const updateUserProfile = async (req, res) => {
-  console.log(req.body);
   try {
     const { token, ...newUserData } = req.body;
 
@@ -182,13 +183,13 @@ export const updateUserProfile = async (req, res) => {
 // To Get user Profile that Have Logged In
 export const getUserProfile = async (req, res) => {
   try {
-    const { token } = req.body;
+    const { token } = req.query;
     const user = await User.findOne({ token: token });
     if (!user) return res.status(404).json({ message: "User not Found" });
 
     const userProfile = await Profile.findOne({ userId: user._id }).populate(
       "userId",
-      "name email userName profilePicture"
+      "name email userName profilePicture",
     );
 
     return res.status(200).json({ userProfile });
@@ -235,7 +236,7 @@ export const getAllUserProfile = async (req, res) => {
   try {
     const profiles = await Profile.find().populate(
       "userId",
-      "name email userName profilePicture"
+      "name email userName profilePicture",
     );
     return res.json({ profiles });
   } catch (error) {
@@ -247,15 +248,16 @@ export const getAllUserProfile = async (req, res) => {
 export const downloadProfile = async (req, res) => {
   try {
     const userId = req.query.id;
-
-    const userProfile = await Profile.findOne({ userId: userId }).populate(
+    const userProfile = await Profile.findOne({ _id: userId }).populate(
       "userId",
-      "name userName email profilePicture"
+      "name userName email profilePicture",
     );
 
     let outputPath = await convertUserDataToPDF(userProfile);
 
-    return res.json({ message: outputPath });
+    const fileName = path.basename(outputPath);
+
+    return res.json({ message: fileName });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -267,14 +269,14 @@ export const sendConnectionRequest = async (req, res) => {
     const { token, connectionId } = req.body;
 
     const user = await User.findOne({ token: token });
-    const connection = await User.findOne({ _id: connectionId });
+    const connection = await User.findOne({ userName: connectionId });
     if (!user || !connection) {
       return res.status(404).json({ message: "User not found" });
     }
 
     const exitingRequest = await Connection.findOne({
       userId: user._id,
-      connectionId: connectionId,
+      connectionId: connection._id,
     });
 
     if (exitingRequest) {
@@ -283,7 +285,7 @@ export const sendConnectionRequest = async (req, res) => {
 
     const newConnection = new Connection({
       userId: user._id,
-      connectionId: connectionId,
+      connectionId: connection._id,
     });
 
     await newConnection.save();
@@ -297,18 +299,21 @@ export const sendConnectionRequest = async (req, res) => {
 // To create a connection Requset between User's
 export const getMyConnectionRequests = async (req, res) => {
   try {
-    const { token } = req.body;
+    const { token } = req.query;
+
     const user = await User.findOne({ token: token });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const connections = await Connection.find({ userId: user._id }).populate(
-      "connectionId",
-      "name userName email profilePicture"
-    );
+    const connections = await Connection.find({
+      $or: [{ userId: user._id }, { connectionId: user._id }],
+      statusAccepted: { $in: [null, false] },
+    })
+      .populate("userId", "name userName email profilePicture")
+      .populate("connectionId", "name userName email profilePicture");
 
-    return res.status(201).json(connections);
+    return res.status(201).json(connections.reverse());
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -317,44 +322,94 @@ export const getMyConnectionRequests = async (req, res) => {
 // To Know the data of What are my Connections
 export const whatAreMyConnections = async (req, res) => {
   try {
-    const { token } = req.body;
+    const { token } = req.query;
+
     const user = await User.findOne({ token: token });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
     const connections = await Connection.find({
-      connectionId: user._id,
+      $or: [{ userId: user._id }, { connectionId: user._id }],
+      statusAccepted: true,
+    })
+      .populate("userId", "name userName email profilePicture")
+      .populate("connectionId", "name userName email profilePicture");
+
+    const formattedConnections = connections.map((c) => {
+      const otherUser =
+        c.userId._id.toString() === user._id.toString()
+          ? c.connectionId
+          : c.userId;
+
+      return otherUser;
+    });
+
+    return res.status(200).json(formattedConnections);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+export const getAllConnections = async (req, res) => {
+  try {
+    const { token } = req.query;
+
+    const user = await User.findOne({ token: token });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const connections = await Connection.find({
+      userId: user._id,
     }).populate("connectionId", "name userName email profilePicture");
-    return res.status(201).json(connections);
+
+    return res.status(201).json(connections.reverse());
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };
 
 // To Accept or Reject the Connection Request
-export const acceptConnectonRequest = async (req, res) => {
+export const acceptConnectionRequest = async (req, res) => {
   try {
-    const { token, requestId, actionType } = req.body;
+    const { token, connectionId, actionType } = req.body;
     const user = await User.findOne({ token: token });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
-    const connection = await Connection.findOne({ userId: requestId });
-
+    const connection = await Connection.findOne({ _id: connectionId });
     if (!connection) {
       return res.status(401).json({ message: "Connection not Found" });
     }
-
     if (actionType === "accept") {
       connection.statusAccepted = true;
     } else {
       connection.statusAccepted = false;
     }
-
     await connection.save();
     return res.status(200).json({ message: "Request updated" });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+export const getUserProfileAndUserBasedOnUserName = async (req, res) => {
+  try {
+    const { userName } = req.query;
+
+    const user = await User.findOne({ userName: userName });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const userProfile = await Profile.findOne({ userId: user._id }).populate(
+      "userId",
+      "name userName email profilePicture",
+    );
+
+    return res.status(200).json({ profile: userProfile });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

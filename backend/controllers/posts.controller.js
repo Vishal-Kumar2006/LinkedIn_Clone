@@ -35,7 +35,7 @@ export const getAllPosts = async (req, res) => {
   try {
     const posts = await Post.find().populate(
       "userId",
-      "name userName emil profilePicture"
+      "name userName emil profilePicture",
     );
     return res.json({ posts });
   } catch (error) {
@@ -46,29 +46,37 @@ export const getAllPosts = async (req, res) => {
 // To delete a Specific post
 export const deletePost = async (req, res) => {
   try {
-    const { token, postId } = req.body;
-    if (!token || !postId) {
+    const { token, post_id } = req.body;
+    if (!token || !post_id) {
       return res.status(400).json({ message: "Bad Request" });
     }
-
     const user = await User.findOne({ token: token }).select("_id");
-
     if (!user) {
       return res.json(404).json({ message: "User not Found" });
     }
-
-    const post = await Post.findOne({ _id: postId });
+    const post = await Post.findOne({ _id: post_id });
     if (!post) {
       return res.json(404).json({ message: "Post not Found" });
     }
-
     if (post.userId.toString() != user._id.toString()) {
       return res.status(401).json({ message: "Unauthorized" });
     }
-
-    post.deleteOne({ _id: postId });
-
+    const resposne = await Post.deleteOne({ _id: post_id });
     return res.json({ message: "Post Deleted" });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+export const incrementPostLike = async (req, res) => {
+  try {
+    const { postId } = req.body;
+
+    const post = await Post.findById({ _id: postId });
+    post.likes += 1;
+    await post.save();
+
+    return res.status(200).json({ message: "Post Like Incremented" });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -109,14 +117,19 @@ export const commentPost = async (req, res) => {
 // To get all comment's of a specific post
 export const getCommentsByPost = async (req, res) => {
   try {
-    const { postId } = req.body;
+    const { postId } = req.query;
     const post = await Post.findOne({ _id: postId });
 
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
 
-    return res.json({ comments: post.comments });
+    const comments = await Comment.find({ postId: postId }).populate(
+      "userId",
+      "userName name profilePicture",
+    );
+
+    return res.json({ comments: comments.reverse(), postId });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -147,7 +160,7 @@ export const deleteCommentOfUser = async (req, res) => {
     }
 
     post.comments = post.comments.filter(
-      (id) => id.toString() !== commentId.toString()
+      (id) => id.toString() !== commentId.toString(),
     );
     await post.save();
 
@@ -186,5 +199,3 @@ export const updateLike = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
-
-//

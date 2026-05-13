@@ -1,0 +1,125 @@
+.homeContainer {
+  display: flex;
+  overflow: hidden;
+}
+
+.homeContainer > div:nth-child(odd) {
+  flex: 0.2;
+}
+
+.homeContainer > div:nth-child(even) {
+  flex: 0.6;
+}
+
+.homeContainer_leftBar {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  gap: 1.2rem;
+  align-items: flex-start;
+  border-right: 1px solid rgb(230, 230, 230);
+}
+
+.sidebar_Option {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  gap: 0.8rem;
+  width: 80%;
+  max-width: 80%;
+  margin: 0 auto;
+  cursor: pointer;
+  transition: all 0.6ms;
+}
+
+.sidebar_Option:hover {
+  transform: scale(1.02);
+}
+
+.sidebar_Option svg {
+  height: 1.4em;
+  min-width: fit-content;
+}
+
+.homeContainer_feedContainer {
+  flex: 1;
+  overflow-y: auto;
+  padding-inline: 0.8rem;
+  scrollbar-width: none;
+}
+
+.homeContainer_extraContainer {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.extraContainer_Profile {
+  margin-top: 0.5rem;
+  display: flex;
+  background-color: rgba(213, 213, 213, 0.19);
+  border-radius: 5px;
+  padding: 0.2rem 0.4rem;
+  cursor: pointer;
+}
+
+.extraContainer_Profile img {
+  height: 3.4rem;
+  width: 3.4rem;
+  border-radius: 50%;
+  margin-right: 0.8rem;
+}
+
+.profileNameAndUserId {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: flex-start;
+}
+
+.profileNameAndUserId h3 {
+  font-size: 1rem;
+}
+
+.profileNameAndUserId p {
+  font-size: 0.8rem;
+}
+
+.mobileNavbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 6vh;
+  justify-content: space-around;
+  background: rgba(255, 255, 255, 0.585);
+  backdrop-filter: blur(2px);
+  align-items: center;
+  display: none;
+}
+
+.singleNavItemHolder_mobileView {
+  height: 4vh;
+  cursor: pointer;
+}
+
+.mobileNavbar svg {
+  height: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+  .homeContainer_extraContainer {
+    display: none;
+  }
+
+  .homeContainer {
+    display: block;
+  }
+
+  .homeContainer_leftBar {
+    display: none;
+  }
+
+  .mobileNavbar {
+    display: flex;
+  }
+}

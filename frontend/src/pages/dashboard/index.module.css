@@ -1,0 +1,268 @@
+.scrollComponent {
+  display: flex;
+  justify-content: center;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.3rem;
+  width: 90%;
+}
+
+.createrPostContainer {
+  display: flex;
+  height: 10svh;
+  width: 75%;
+  padding-inline: 0.8rem;
+  gap: 0.8rem;
+  align-items: center;
+  background-color: rgba(255, 242, 242, 0.562);
+  border-radius: 20px;
+  position: relative;
+}
+.userProfile {
+  border-radius: 100%;
+  width: fit-content;
+  height: 60%;
+}
+
+.createrPostContainer > textarea {
+  width: 100%;
+}
+
+.Fab {
+  background: rgba(0, 38, 141, 0.803);
+  border-radius: 100%;
+}
+
+.Fab > svg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  height: 40px;
+  width: fit-content;
+}
+
+.textAreaContent {
+  width: 80%;
+  max-width: 80%;
+  height: 70%;
+  max-height: 90%;
+  border: 1px solid silver;
+  border-radius: 8px;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-inline: 1rem;
+  padding-block: 0.5rem;
+  outline: none;
+}
+.uploadButton {
+  position: absolute;
+  right: 0;
+  bottom: -35px;
+  background: rgba(0, 38, 141, 0.803);
+  color: white;
+  border-radius: 10px;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.postsContainer {
+  width: 110%;
+  height: 76vh;
+}
+
+.singleCard {
+  width: 100%;
+  border-radius: 10px 10px 10px 0;
+  border-bottom: 1px solid rgb(179, 179, 179);
+}
+
+.singleCard_ProfileContainer {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  padding: 1rem;
+  padding-right: 3.4rem;
+}
+
+.singleCard_ProfileContainer > div {
+  width: 100%;
+}
+
+.singleCard_UserImage {
+  width: 10%;
+  border-radius: 50%;
+}
+
+.singleCard_Image {
+  min-width: 100%;
+  width: 100%;
+  height: fit-content;
+  padding-top: 0.6rem;
+  overflow: hidden;
+}
+
+.singleCard_Image > img {
+  min-width: 100%;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  padding-top: 0.2rem;
+  border-radius: 20px;
+}
+
+.optionsContainer {
+  display: flex;
+  height: 20%;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.singleOption_OptionContainer {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 0.4rem;
+  font-weight: 550;
+}
+
+.singleOption_OptionContainer > svg {
+  height: 1.2rem;
+}
+
+.singleOption_OptionContainer > p {
+  font-size: 1rem;
+}
+
+.commentsContainer {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.allCommentsContainer {
+  width: 60vw;
+  height: 80vh;
+  background: rgb(255, 255, 255);
+  border-radius: 10px;
+  position: relative;
+  padding: 1.4rem;
+  cursor: default;
+  display: flex;
+  justify-content: center;
+}
+
+.postCommentContainer {
+  position: absolute;
+  bottom: 1.2rem;
+  left: 1.2rem;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+}
+
+.postCommentContainer > input {
+  flex: 0.9;
+  padding: 1.2rem 1.5rem;
+  border: none;
+  background-color: rgba(128, 128, 128, 0.2);
+  border-radius: 4px;
+  outline: none;
+}
+
+.postCommentContainer > input:focus {
+  outline: 1px solid silver;
+}
+
+.postCommentontainer_commentBtn {
+  flex: 0.1;
+  width: fit-content;
+  padding: 1.2rem;
+  background-color: orange;
+  color: rgb(255, 255, 255);
+  border-radius: 10px;
+  text-align: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.show_Comments_Container {
+  width: 46vw;
+  height: 58vh;
+  overflow-y: scroll;
+}
+
+.showCommentContainer {
+  box-shadow: 2px 4px 8px rgb(217, 217, 217);
+  border-radius: 10px;
+  padding: 0.3rem 0 0 0.5rem;
+  margin: 0.5rem;
+}
+
+.showCommentContainer_UserDetail {
+  display: flex;
+}
+
+.showCommentContainer_UserDetail > img {
+  height: 2rem;
+  border-radius: 50%;
+}
+
+.showCommentContainer_UserDetail > div {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.7rem;
+  align-items: center;
+  gap: 0;
+}
+
+.showCommentContainer_CommentDetails {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.2rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .createrPostContainer {
+    width: 95%;
+    border-radius: 10px;
+  }
+  .singleOption_OptionContainer > svg {
+    height: 1rem;
+  }
+
+  .allCommentsContainer {
+    width: 90vw;
+  }
+
+  .show_Comments_Container {
+    width: 70vw;
+    height: 58vh;
+    overflow-y: scroll;
+  }
+
+  .postCommentContainer > input {
+    padding: 1rem 1.2rem;
+  }
+
+  .postCommentontainer_commentBtn {
+    padding: 0.8rem;
+  }
+}

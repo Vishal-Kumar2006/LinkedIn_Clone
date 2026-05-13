@@ -1,0 +1,285 @@
+.profileContainer {
+  padding: 1.3rem 0.5rem;
+  background-color: rgba(247, 247, 247, 0.559);
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+}
+
+.backDropContainer {
+  width: 100%;
+  height: 30vh;
+  background: url("https://images.pexels.com/photos/8798140/pexels-photo-8798140.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  border-radius: 20px;
+}
+
+.backdrop {
+  width: 7em;
+  height: 7em;
+  object-fit: cover;
+  border-radius: 50%;
+  position: absolute;
+  left: 8%;
+  bottom: -30%;
+  text-align: center;
+}
+
+.backDrop_Overlay {
+  width: 7em;
+  height: 7em;
+  object-fit: cover;
+  border-radius: 50%;
+  position: absolute;
+  left: 8%;
+  bottom: -30%;
+  text-align: center;
+  z-index: 10;
+  transition: 0.18s linear;
+  border-radius: 50%;
+}
+
+.backDrop_Overlay:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0);
+  opacity: 0.55;
+}
+
+.backDrop_Overlay > p {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  border-radius: 50%;
+}
+
+.backDrop_Overlay > p:hover {
+  opacity: 1;
+  color: rgb(255, 255, 255);
+}
+
+.profileContainer_Details {
+  padding-top: 5rem;
+  margin: 0;
+}
+
+.profileContainer_Details_rightBar h3 {
+  font-size: 1rem;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  margin-top: 0.2rem;
+}
+
+.card_profileContainer {
+  display: flex;
+}
+
+.card_profileContainer > img {
+  width: 3.4rem;
+  height: 3.4rem;
+  object-fit: cover;
+}
+
+.card_profileContainer > p {
+  font-size: 0.8rem;
+}
+
+.connectButton {
+  padding: 0.3rem 0.8rem;
+  background-color: rgb(3, 93, 193, 0.9);
+  outline: none;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.connectedButton {
+  padding: 0.3rem 0.8rem;
+  outline: none;
+  color: rgb(3, 93, 193, 0.9);
+  border-radius: 10px;
+  border: 1.5px solid rgb(3, 93, 193, 0.9);
+  cursor: pointer;
+}
+
+.workHistory {
+  margin-top: 1.2rem;
+}
+
+.workHistory_Container {
+  display: flex;
+  gap: 1.4rem;
+  padding-top: 1rem;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.workHistory_Card {
+  min-width: fit-content;
+  padding: 1rem 2.5rem;
+  border-radius: 10px;
+  box-shadow: 2px 6px 10px rgb(173, 173, 173);
+}
+
+.profileContainer_Details_leftBar {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+
+.nameAndUserName {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.nameAndUserName input {
+  width: 70%;
+  outline: none;
+  border-style: none;
+  padding: 9px 10px;
+  background: none;
+}
+
+.profileContainer_Details_leftBar div {
+  display: flex;
+  align-items: center;
+}
+
+.profileContainer_Details_rightBar {
+  display: flex;
+  flex-direction: column;
+  min-width: 19%;
+}
+
+.nameEdit {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.connectButton {
+  padding: 0.3rem 0.8rem;
+  background-color: rgb(3, 93, 193, 0.9);
+  outline: none;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.profileBio {
+  border: none;
+  outline: none;
+  padding: 0 10px;
+  background: none;
+  font-family: "poppins" !important;
+  font-size: 0.8rem;
+}
+
+.addWorkButton {
+  padding: 1.2rem 1.3rem;
+  background: white;
+  border: 1px dotted gray;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.commentsContainer {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.allCommentsContainer {
+  width: 40vw;
+  height: fit-content;
+  background: rgb(255, 255, 255);
+  border-radius: 10px;
+  position: relative;
+  padding: 1.4rem;
+  cursor: default;
+  display: flex;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.inputField {
+  padding: 0.8rem 1.3rem;
+  outline: none;
+  border-radius: 10px;
+  border: 1px solid grey;
+  width: 100%;
+}
+
+.profileContainer_flex {
+  display: flex;
+  gap: 0.5rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .profileContainer {
+    padding: 2.5rem 0.3rem;
+    gap: 1rem;
+  }
+  .profileContainer_Details {
+    padding-top: 3rem;
+  }
+
+  .profileContainer_flex {
+    flex-direction: column;
+  }
+
+  .backDropContainer {
+    width: 100%;
+    height: 20vh;
+    border-radius: 12px;
+  }
+
+  .backDropContainer > img {
+    width: 5em;
+    height: 5em;
+    bottom: -30%;
+  }
+
+  .profileContainer_Details {
+    padding-top: 3rem;
+  }
+
+  .profileContainer_Details_leftBar {
+    width: 100%;
+  }
+  .profileContainer_Details_rightBar {
+    width: 100%;
+  }
+
+  .profileContainer_Details_rightBar h3 {
+    font-size: 1rem;
+  }
+
+  .card_profileContainer > img {
+    width: 5rem;
+  }
+
+  .card_profileContainer > p {
+    font-size: 0.8rem;
+  }
+}
