@@ -54,12 +54,14 @@
 }
 
 .extraContainer_Profile {
-  margin-top: 0.5rem;
+  margin: 4%;
+  width: 92%;
   display: flex;
-  background-color: rgba(213, 213, 213, 0.19);
-  border-radius: 5px;
-  padding: 0.2rem 0.4rem;
+  background-color: rgb(255, 255, 255);
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
   cursor: pointer;
+  box-shadow: 4px 6px 10px rgb(202, 202, 202);
 }
 
 .extraContainer_Profile img {
